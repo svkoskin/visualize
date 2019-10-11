@@ -34,8 +34,23 @@ app = Flask(__name__)
 
 @app.route('/')
 def render():
-    graph = scatter.build(100)
+    default_n = 100
+
+    n = None
+    errors = []
+
+    n_str = request.args.get('n')
+    if n_str:
+        try:
+            n = int(request.args.get('n'))
+        except ValueError:
+            errors.append('n must be a number. Using the default instead.')
+
+    if n is None:
+        n = default_n
+
+    graph = scatter.build(int(n))
     graph_json = json.dumps(graph, cls=NumpyEncoder)
-    return render_template('index.html', graph_json=graph_json)
+    return render_template('index.html', graph_json=graph_json, n=n, errors=errors)
 
 app.run()
