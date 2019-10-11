@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import json
 
-from flask import Flask, escape, request
+from flask import Flask, escape, request, render_template
 
 import numpy
 
@@ -34,6 +34,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def render():
-    return json.dumps(scatter.build(100), cls=NumpyEncoder)
+    graph = scatter.build(100)
+    graph_json = json.dumps(graph, cls=NumpyEncoder)
+    return render_template('index.html', graph_json=graph_json)
 
 app.run()
