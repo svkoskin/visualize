@@ -42,7 +42,7 @@ def render():
     n_str = request.args.get('n')
     if n_str:
         try:
-            n = int(request.args.get('n'))
+            n = int(n_str)
         except ValueError:
             errors.append('n must be a number. Using the default instead.')
 
