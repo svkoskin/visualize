@@ -49,7 +49,7 @@ def render():
     if n is None:
         n = default_n
 
-    graph = scatter.build(int(n))
+    graph = scatter.build(n)
     graph_json = json.dumps(graph, cls=NumpyEncoder)
     return render_template('index.html', graph_json=graph_json, n=n, errors=errors)
 
